@@ -1,4 +1,13 @@
-import type { NextPage } from "next"
+import { Canvas } from "@react-three/fiber"
 
-const Home: NextPage = () => <>Hello World</>
+import { NextPage } from "next"
+
+import { Scene } from "@components"
+
+const Home: NextPage = () => (
+	<Canvas camera={{ position: [0, 10, 0] }}>
+		<Scene />
+	</Canvas>
+)
+
 export default Home
