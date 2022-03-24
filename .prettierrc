@@ -1,0 +1,19 @@
+{
+	"trailingComma": "all",
+	"useTabs": true,
+	"semi": false,
+	"singleQuote": false,
+	"tabWidth": 4,
+	"printWidth": 80,
+	"arrowParens": "always",
+	"importOrderSeparation": true,
+	"importOrder": [
+		".*scss$",
+		"^\\w+",
+		"^@components.*",
+		"^@hooks$",
+		"^(@lib)|(@utils)$",
+		"^@seo-default$",
+		"^@models/.*"
+	]
+}

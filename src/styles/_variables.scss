@@ -1,0 +1,22 @@
+@use "colors";
+
+$min-screen-width: var(--min-screen-width);
+$border: 1px solid colors.$border;
+
+@mixin rounded {
+	border-radius: 0.25rem;
+}
+
+@mixin rounded-lg {
+	overflow: hidden;
+	border-radius: 0.5rem;
+}
+
+@mixin shadow {
+	box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%),
+		0 4px 6px -2px rgb(0 0 0 / 5%);
+}
+
+@mixin border {
+	border: $border;
+}

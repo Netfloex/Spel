@@ -1,0 +1,43 @@
+@use "responsive";
+
+html,
+.light {
+	--background: #e5e7eb;
+	--secondary-background: #fff;
+	--tertiary-background: #f9fafb;
+	--border-color: #ced4da;
+	--button-background: #adb5bd;
+	--text: #212529;
+}
+
+html,
+.dark {
+	--background: #222;
+	--secondary-background: #2c2c2c;
+	--tertiary-background: #373737;
+	--border-color: #616161;
+	--button-background: #dee2e6;
+	--text: #fff;
+}
+
+:root {
+	@include responsive.sm {
+		--min-screen-width: #{responsive.$width-sm};
+	}
+
+	@include responsive.md {
+		--min-screen-width: #{responsive.$width-md};
+	}
+
+	@include responsive.lg {
+		--min-screen-width: #{responsive.$width-lg};
+	}
+
+	@include responsive.xl {
+		--min-screen-width: #{responsive.$width-xl};
+	}
+
+	@include responsive.xxl {
+		--min-screen-width: #{responsive.$width-xxl};
+	}
+}
