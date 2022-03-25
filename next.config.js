@@ -4,8 +4,12 @@
  * @type {import('next').NextConfig}
  **/
 
-module.exports = {
+const config = {
 	eslint: {
-		ignoreDuringBuilds: true
-	}
-};
+		ignoreDuringBuilds: true,
+	},
+}
+
+const withTM = require("next-transpile-modules")(["three"])
+
+module.exports = withTM(config)
