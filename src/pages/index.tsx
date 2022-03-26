@@ -5,7 +5,7 @@ import { NextPage } from "next"
 import { Scene } from "@components"
 
 const Home: NextPage = () => (
-	<Canvas camera={{ position: [0, 10, 0] }}>
+	<Canvas shadows camera={{ position: [0, 10, 0] }}>
 		<Scene />
 	</Canvas>
 )
