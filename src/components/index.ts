@@ -1,3 +1,4 @@
+export { Bullet } from "./Bullet"
 export { Floor } from "./Floor"
 export { Player } from "./Player"
 export { Scene } from "./Scene"

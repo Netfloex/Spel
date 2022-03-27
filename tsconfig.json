@@ -6,11 +6,13 @@
 			"@styles/*": ["src/styles/*"],
 
 			"@components": ["src/components"],
+			"@components/player": ["src/components/player"],
 			"@lib": ["src/lib"],
 			"@utils": ["src/utils"],
 			"@hooks": ["src/utils/hooks"],
 
-			"@seo-default": ["src/next-seo.config"]
+			"@seo-default": ["src/next-seo.config"],
+			"@stats": ["src/stats.ts"]
 		},
 		"outDir": "./dist",
 		"target": "ES5",

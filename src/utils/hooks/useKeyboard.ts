@@ -2,7 +2,7 @@ import { MutableRefObject, useRef } from "react"
 
 import { useEventListener } from "@hooks"
 
-type Keyboard = Record<string, boolean>
+type Keyboard = Record<string, true>
 
 export const useKeyboard = (): MutableRefObject<Keyboard> => {
 	const keyboard = useRef<Keyboard>({})
