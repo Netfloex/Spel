@@ -20,3 +20,8 @@ export const bulletStats = {
 export const cameraStats = {
 	y: 20,
 }
+
+export const floorStats = {
+	color: 0x343434,
+	size: 100,
+}
