@@ -8,6 +8,9 @@ const config = {
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
+	experimental: {
+		outputStandalone: true,
+	},
 }
 
 const withTM = require("next-transpile-modules")(["three"])
