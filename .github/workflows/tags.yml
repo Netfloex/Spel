@@ -19,4 +19,4 @@ jobs:
               with:
                   username: netfloex
                   token: ${{ secrets.DOCKERHUB_TOKEN }}
-                  tags: netfloex/theorie:${{ steps.vars.outputs.tag }}
+                  tags: netfloex/spel:${{ steps.vars.outputs.tag }}
