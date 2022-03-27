@@ -29,6 +29,7 @@ export const Tank: FC<{ meshRef?: MutableRefObject<Mesh> }> = ({ meshRef }) => {
 					/>
 					<meshStandardMaterial color={tankStats.gunColor} />
 				</mesh>
+				<pointLight position={[0, 10, 0]} castShadow />
 			</group>
 		</mesh>
 	)

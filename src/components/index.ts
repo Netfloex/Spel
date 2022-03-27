@@ -1,5 +1,6 @@
 export { Bullet } from "./Bullet"
 export { Floor } from "./Floor"
 export { Player } from "./Player"
+export { Orb } from "./Orb"
 export { Scene } from "./Scene"
 export { Tank } from "./Tank"
