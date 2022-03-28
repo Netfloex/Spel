@@ -2,7 +2,7 @@ import { Triplet } from "@pmndrs/cannon-worker-api"
 import { useFrame } from "@react-three/fiber"
 import { bulletStats, tankStats } from "@stats"
 
-import { RefObject, useMemo, useRef } from "react"
+import { MutableRefObject, useMemo, useRef } from "react"
 import { Vector3 } from "three"
 
 import { Bullet, useGame } from "@components"
@@ -11,10 +11,9 @@ import { useMouse } from "@hooks"
 
 export type LiveBullet = Bullet & {
 	built: number
-	id: number
 }
 
-export const useBullets = (playerPos: RefObject<Triplet>): void => {
+export const useBullets = (playerPos: MutableRefObject<Triplet>): void => {
 	const playerVector = useMemo(() => new Vector3(), [])
 	const mouse = useMouse()
 

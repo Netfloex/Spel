@@ -1,7 +1,7 @@
 import { Triplet } from "@pmndrs/cannon-worker-api"
 
 export const tankStats = {
-	secondsPerBullet: 0.1,
+	secondsPerBullet: 1,
 	radius: 1,
 	gunLength: 0.9,
 	gunInsideLength: 0.2,
@@ -37,9 +37,9 @@ export const tankBuild = {
 export const bulletStats = {
 	radius: 0.5,
 	speed: 50,
-	// friction: 0.01,
 	damping: 0.9,
 	secondsToLive: 10,
+	fadeSeconds: 1,
 	color: 0x757575,
 }
 

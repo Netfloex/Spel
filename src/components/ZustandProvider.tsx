@@ -1,6 +1,6 @@
 import { bulletStats, floorStats } from "@stats"
 
-import type { FC } from "react"
+import { createRef, FC } from "react"
 import { OrbType } from "src/components/Orbs"
 import { Vector3 } from "three"
 import create from "zustand"
@@ -24,6 +24,8 @@ type State = {
 	freshenBullets: (time: number) => void
 
 	orbs: LiveOrb[]
+	killOrb: (id: number) => void
+	fadeBullet: (id: number, time: number) => void
 }
 
 const { Provider, useStore } = createContext<State>()
@@ -48,15 +50,33 @@ export const ZustandProvider: FC = ({ children }) => {
 									startPos,
 									built: time,
 									id: bulletId,
+									bulletRef: createRef(),
 								},
 							],
 						})),
 					// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 					freshenBullets: (time) => {
-						const bullets = get().bullets
+						const { bullets }: { bullets: LiveBullet[] } = get()
 						const freshBullets = bullets.filter(
-							(bullet) =>
-								time - bullet.built < bulletStats.secondsToLive,
+							(bullet: LiveBullet) => {
+								const timeAlive = time - bullet.built
+								if (
+									bullet.bulletRef.current &&
+									bulletStats.secondsToLive - timeAlive <
+										bulletStats.fadeSeconds &&
+									!Array.isArray(
+										bullet.bulletRef.current.material,
+									)
+								) {
+									bullet.bulletRef.current.material.opacity =
+										(bulletStats.secondsToLive -
+											timeAlive) /
+										bulletStats.fadeSeconds
+
+									bullet.bulletRef.current.castShadow = false
+								}
+								return timeAlive < bulletStats.secondsToLive
+							},
 						)
 						if (freshBullets.length != bullets.length)
 							return set(() => ({
@@ -64,7 +84,7 @@ export const ZustandProvider: FC = ({ children }) => {
 							}))
 					},
 
-					orbs: Array.from({ length: 10 }, () => ({
+					orbs: Array.from({ length: 50 }, (_, id) => ({
 						startPos: new Vector3(
 							random(-floorStats.size / 2, floorStats.size / 2),
 							1,
@@ -73,7 +93,32 @@ export const ZustandProvider: FC = ({ children }) => {
 						type: Math.round(
 							random(OrbType.square, OrbType.hexagon),
 						),
+						id,
+						orbRef: createRef(),
 					})),
+					killOrb: (id: number) =>
+						set(({ orbs }) => ({
+							orbs: orbs.filter((orb) => orb.id != id),
+						})),
+					fadeBullet: (id: number, time: number) =>
+						set(({ bullets }) => ({
+							bullets: bullets.map((bullet) => {
+								if (bullet.id != id) return bullet
+
+								const newBuilt =
+									time -
+									bulletStats.secondsToLive +
+									bulletStats.fadeSeconds
+
+								if (newBuilt < bullet.built)
+									return {
+										...bullet,
+										built: newBuilt,
+									}
+
+								return bullet
+							}),
+						})),
 				}))
 			}
 		>

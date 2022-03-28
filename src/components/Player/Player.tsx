@@ -20,7 +20,7 @@ export const Player: FC = () => {
 		[api],
 	)
 
-	useMovement(api.current)
+	useMovement(api)
 	useBullets(playerPos)
 
 	const mouse = useMouse()

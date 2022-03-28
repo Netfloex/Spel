@@ -18,13 +18,13 @@ export const Orbs: FC = () => {
 
 	return (
 		<>
-			{orbs.map((orb, i) => {
+			{orbs.map((orb) => {
 				if (orb.type == OrbType.square)
-					return <Square key={i} startPos={orb.startPos} />
+					return <Square key={orb.id} {...orb} />
 				if (orb.type == OrbType.triangle)
-					return <Triangle key={i} startPos={orb.startPos} />
+					return <Triangle key={orb.id} {...orb} />
 				if (orb.type == OrbType.hexagon)
-					return <Hexagon key={i} startPos={orb.startPos} />
+					return <Hexagon key={orb.id} {...orb} />
 			})}
 		</>
 	)
