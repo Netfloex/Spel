@@ -1,18 +1,44 @@
+import { Triplet } from "@pmndrs/cannon-worker-api"
+
 export const tankStats = {
-	secondsPerBullet: 1,
+	secondsPerBullet: 0.1,
 	radius: 1,
 	gunLength: 0.9,
+	gunInsideLength: 0.2,
 	gunRadius: 0.5,
-	maxSpeed: 20,
-	friction: 0.05,
-	bodyColor: 0x03a9f4,
-	gunColor: 0x9e9e9e,
+	speedPerSecond: 40,
+	maxSpeed: 10,
+	damping: 0.95,
+}
+
+export const tankBuild = {
+	body: {
+		color: 0x03a9f4,
+		args: [tankStats.radius] as [radius: number],
+	},
+	gun: {
+		color: 0x9e9e9e,
+		args: [
+			tankStats.gunRadius,
+			tankStats.gunRadius,
+			tankStats.gunLength,
+		] as Triplet,
+		rotation: [-Math.PI / 2, 0, 0] as Triplet,
+		position: [
+			0,
+			0,
+			tankStats.gunLength / 2 +
+				tankStats.radius -
+				tankStats.gunInsideLength,
+		] as Triplet,
+	},
 }
 
 export const bulletStats = {
 	radius: 0.5,
-	maxSpeed: 20,
-	friction: 0.01,
+	speed: 50,
+	// friction: 0.01,
+	damping: 0.9,
 	secondsToLive: 10,
 	color: 0x757575,
 }

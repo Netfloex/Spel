@@ -1,11 +1,12 @@
 import { bulletStats, floorStats } from "@stats"
 
 import type { FC } from "react"
+import { OrbType } from "src/components/Orbs"
 import { Vector3 } from "three"
 import create from "zustand"
 import createContext from "zustand/context"
 
-import { Orb } from "@components"
+import { LiveOrb } from "@components"
 import { LiveBullet } from "@components/player"
 
 import { random } from "@utils"
@@ -22,7 +23,7 @@ type State = {
 
 	freshenBullets: (time: number) => void
 
-	orbs: Orb[]
+	orbs: LiveOrb[]
 }
 
 const { Provider, useStore } = createContext<State>()
@@ -69,7 +70,9 @@ export const ZustandProvider: FC = ({ children }) => {
 							1,
 							random(-floorStats.size / 2, floorStats.size / 2),
 						),
-						type: Math.round(random(0, 2)),
+						type: Math.round(
+							random(OrbType.square, OrbType.hexagon),
+						),
 					})),
 				}))
 			}

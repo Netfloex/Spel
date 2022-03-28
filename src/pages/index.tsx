@@ -1,14 +1,18 @@
+import { Physics } from "@react-three/cannon"
 import { Canvas } from "@react-three/fiber"
+import { cameraStats } from "@stats"
 
 import { NextPage } from "next"
 
 import { Scene, ZustandProvider } from "@components"
 
 const Home: NextPage = () => (
-	<Canvas shadows camera={{ position: [0, 10, 0] }}>
-		<ZustandProvider>
-			<Scene />
-		</ZustandProvider>
+	<Canvas shadows camera={{ position: [0, cameraStats.y, 0] }}>
+		<Physics gravity={[0, 0, 0]}>
+			<ZustandProvider>
+				<Scene />
+			</ZustandProvider>
+		</Physics>
 	</Canvas>
 )
 

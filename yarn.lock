@@ -363,6 +363,22 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@pmndrs/cannon-worker-api@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@pmndrs/cannon-worker-api/-/cannon-worker-api-1.1.0.tgz#12252f7a1918bed3d83fab5a042a88ff5478d5a4"
+  integrity sha512-blKSJiuOpxH5var+aXhXMQG4yoFzvN2xueEleNLTQyDM242ufcev7sxyu2sDlzCvB+NCQeYnreUoaZBSEA5MCA==
+  dependencies:
+    three "^0.137.0"
+
+"@react-three/cannon@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@react-three/cannon/-/cannon-5.1.0.tgz#94fe4985f3ad47a2834af31afef51ac90abfb2c1"
+  integrity sha512-p3oOY7FrFSlGfmkv9wATdJbGEugAfhaWROKUFW4XvKm7RAmU+RAMhSAXfk5iV1P2EIr8ZtMC0zJ53yfz/WNv2w==
+  dependencies:
+    "@react-three/fiber" "^7.0.26"
+    react ">=17.0"
+    three "^0.137.0"
+
 "@react-three/fiber@^7.0.26":
   version "7.0.26"
   resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-7.0.26.tgz#36ec19fa7bff00738a7dd368d37d81fed912dd52"
@@ -2005,7 +2021,7 @@ react-use-measure@^2.1.1:
   dependencies:
     debounce "^1.2.1"
 
-react@^17.0.2:
+react@>=17.0, react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
   integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
@@ -2234,6 +2250,11 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
+three@^0.137.0:
+  version "0.137.5"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.137.5.tgz#a1e34bedd0412f2d8797112973dfadac78022ce6"
+  integrity sha512-rTyr+HDFxjnN8+N/guZjDgfVxgHptZQpf6xfL/Mo7a5JYIFwK6tAq3bzxYYB4Ae0RosDZlDuP+X5aXDXz+XnHQ==
 
 three@^0.139.0:
   version "0.139.0"

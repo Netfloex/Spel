@@ -1,18 +1,13 @@
 import { FC } from "react"
 
-import { Floor, Orb, Player, Tank, useGame } from "@components"
+import { Bullets, Floor, Orbs, Player, Tank } from "@components"
 
-export const Scene: FC = () => {
-	const orbs = useGame((state) => state.orbs)
-	return (
-		<>
-			<Tank />
-			<Player />
-			<Floor />
-
-			{orbs.map((orb, i) => (
-				<Orb {...orb} key={i} />
-			))}
-		</>
-	)
-}
+export const Scene: FC = () => (
+	<>
+		<Tank position={[5, 1, 5]} />
+		<Player />
+		<Floor />
+		<Bullets />
+		<Orbs />
+	</>
+)

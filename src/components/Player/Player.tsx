@@ -1,39 +1,32 @@
+import { PublicApi, Triplet } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
 import { cameraStats } from "@stats"
 
-import { FC, useRef } from "react"
+import { FC, useEffect, useRef } from "react"
 import { useBullets } from "src/components/Player/useBullets"
 import { useMovement } from "src/components/Player/useMovement"
-import { Mesh } from "three"
 
-import { Bullet, Tank, useGame } from "@components"
+import { Tank } from "@components"
 
 import { useMouse } from "@hooks"
 
 export const Player: FC = () => {
-	const player = useRef<Mesh>(null!)
+	const api = useRef<PublicApi | undefined>(undefined)
 
-	useMovement(player)
-	useBullets(player)
+	const playerPos = useRef<Triplet>([0, 0, 0])
+	useEffect(
+		() =>
+			api.current?.position.subscribe((val) => (playerPos.current = val)),
+		[api],
+	)
+
+	useMovement(api.current)
+	useBullets(playerPos)
 
 	const mouse = useMouse()
-
-	useFrame((state) => {
-		state.camera.position.copy(player.current.position).setY(cameraStats.y)
-
-		player.current.lookAt(mouse.current.pos)
+	useFrame(({ camera }) => {
+		camera.position.fromArray(playerPos.current).setY(cameraStats.y)
 	})
 
-	const bullets = useGame((state) => state.bullets)
-
-	console.log(useGame())
-
-	return (
-		<>
-			<Tank meshRef={player} />
-			{bullets.map((bullet) => (
-				<Bullet key={bullet.id} {...bullet} />
-			))}
-		</>
-	)
+	return <Tank api={api} lookAt={mouse} />
 }

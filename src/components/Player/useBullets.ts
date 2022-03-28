@@ -1,8 +1,9 @@
+import { Triplet } from "@pmndrs/cannon-worker-api"
 import { useFrame } from "@react-three/fiber"
 import { bulletStats, tankStats } from "@stats"
 
-import { MutableRefObject, useRef } from "react"
-import { Mesh } from "three"
+import { RefObject, useMemo, useRef } from "react"
+import { Vector3 } from "three"
 
 import { Bullet, useGame } from "@components"
 
@@ -13,7 +14,8 @@ export type LiveBullet = Bullet & {
 	id: number
 }
 
-export const useBullets = (player: MutableRefObject<Mesh>): void => {
+export const useBullets = (playerPos: RefObject<Triplet>): void => {
+	const playerVector = useMemo(() => new Vector3(), [])
 	const mouse = useMouse()
 
 	const lastBullet = useRef(0)
@@ -24,6 +26,9 @@ export const useBullets = (player: MutableRefObject<Mesh>): void => {
 	])
 
 	useFrame((state) => {
+		if (!playerPos.current) return
+		playerVector.fromArray(playerPos.current)
+
 		const time = state.clock.getElapsedTime()
 
 		if (
@@ -34,20 +39,19 @@ export const useBullets = (player: MutableRefObject<Mesh>): void => {
 			lastBullet.current = time
 			const newBulletForce = mouse.current.pos
 				.clone()
-				.sub(player.current.position)
-				.setLength(bulletStats.maxSpeed)
-				.setY(0)
+				.sub(playerVector)
+				.setLength(bulletStats.speed)
 
 			addBullet({
-				startPos: player.current.position
+				startPos: playerVector
 					.clone()
 					.add(
 						newBulletForce
 							.clone()
 							.setLength(
 								tankStats.gunLength +
-									tankStats.radius -
-									bulletStats.radius,
+									tankStats.radius +
+									tankStats.gunInsideLength,
 							),
 					),
 				force: newBulletForce.clone(),
