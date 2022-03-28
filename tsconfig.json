@@ -6,7 +6,7 @@
 			"@styles/*": ["src/styles/*"],
 
 			"@components": ["src/components"],
-			"@components/player": ["src/components/player"],
+			"@components/player": ["src/components/Player"],
 			"@lib": ["src/lib"],
 			"@utils": ["src/utils"],
 			"@hooks": ["src/utils/hooks"],

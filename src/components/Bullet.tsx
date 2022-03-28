@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber"
 import { bulletStats } from "@stats"
 
-import { FC, useRef } from "react"
+import { FC, useMemo, useRef } from "react"
 import { Mesh, Vector3 } from "three"
 
 export interface Bullet {
@@ -12,12 +12,14 @@ export interface Bullet {
 export const Bullet: FC<Bullet> = ({ startPos, force }) => {
 	const bullet = useRef<Mesh>(null!)
 
+	const zeroVector = useMemo(() => new Vector3(0, 0, 0), [])
+
 	useFrame((state, delta) => {
 		bullet.current.position.x += delta * force.x
 		bullet.current.position.y += delta * force.y
 		bullet.current.position.z += delta * force.z
 
-		force.lerp(new Vector3(0, 0, 0), bulletStats.friction)
+		force.lerp(zeroVector, bulletStats.friction)
 	})
 
 	return (

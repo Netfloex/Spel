@@ -6,7 +6,7 @@ import { useBullets } from "src/components/Player/useBullets"
 import { useMovement } from "src/components/Player/useMovement"
 import { Mesh } from "three"
 
-import { Bullet, Tank } from "@components"
+import { Bullet, Tank, useGame } from "@components"
 
 import { useMouse } from "@hooks"
 
@@ -14,7 +14,7 @@ export const Player: FC = () => {
 	const player = useRef<Mesh>(null!)
 
 	useMovement(player)
-	const bullets = useBullets(player)
+	useBullets(player)
 
 	const mouse = useMouse()
 
@@ -23,6 +23,10 @@ export const Player: FC = () => {
 
 		player.current.lookAt(mouse.current.pos)
 	})
+
+	const bullets = useGame((state) => state.bullets)
+
+	console.log(useGame())
 
 	return (
 		<>
