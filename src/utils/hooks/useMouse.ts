@@ -20,11 +20,11 @@ export const useMouse = (): MutableRefObject<Mouse> => {
 			.setY(1)
 	})
 
-	useEventListener("mousedown", ({ button }) => {
+	useEventListener("pointerdown", ({ button }) => {
 		mouse.current[button] = true
 	})
 
-	useEventListener("mouseup", ({ button }) => {
+	useEventListener("pointerup", ({ button }) => {
 		delete mouse.current[button]
 	})
 
