@@ -14,7 +14,7 @@ export interface Bullet {
 export const Bullet: FC<Bullet> = ({ startPos, force, bulletRef, id }) => {
 	useSphere(
 		() => ({
-			// isTrigger: true,
+			isTrigger: true,
 			args: [bulletStats.radius],
 			position: startPos.toArray(),
 			mass: 1,

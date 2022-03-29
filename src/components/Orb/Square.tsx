@@ -1,3 +1,5 @@
+import { orbsBuild } from "@stats"
+
 import type { FC } from "react"
 import { BoxBufferGeometry } from "three"
 
@@ -7,8 +9,8 @@ export const Square: FC<Orb> = (props) => (
 	<Orb
 		geometry={BoxBufferGeometry}
 		shapeType="Box"
-		args={[1.5, 1.5, 1.5]}
-		color={0xff9800}
+		args={orbsBuild.square.args}
+		color={orbsBuild.square.color}
 		{...props}
 	/>
 )

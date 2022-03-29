@@ -1,4 +1,4 @@
-import { bulletStats, floorStats } from "@stats"
+import { bulletStats, floorStats, orbStats } from "@stats"
 
 import { createRef, FC } from "react"
 import { OrbType } from "src/components/Orbs"
@@ -87,7 +87,7 @@ export const ZustandProvider: FC = ({ children }) => {
 					orbs: Array.from({ length: 50 }, (_, id) => ({
 						startPos: new Vector3(
 							random(-floorStats.size / 2, floorStats.size / 2),
-							1,
+							orbStats.y,
 							random(-floorStats.size / 2, floorStats.size / 2),
 						),
 						type: Math.round(

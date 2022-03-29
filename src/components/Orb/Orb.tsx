@@ -1,5 +1,6 @@
 import { ShapeType, useCompoundBody } from "@react-three/cannon"
 import { useThree } from "@react-three/fiber"
+import { orbStats } from "@stats"
 
 import { FC, MutableRefObject } from "react"
 import { BoxBufferGeometry, CylinderBufferGeometry, Mesh, Vector3 } from "three"
@@ -39,9 +40,10 @@ export const Orb: FC<
 			],
 			mass: 1,
 			position: startPos.toArray(),
-			linearDamping: 0.9,
-			angularDamping: 0.9,
+			linearDamping: orbStats.damping,
+			angularDamping: orbStats.angularDamping,
 			linearFactor: [1, 0, 1],
+			isTrigger: true,
 			onCollide: ({ body }): void => {
 				killOrb(id)
 				fadeBullet(body.userData.id, clock.getElapsedTime())

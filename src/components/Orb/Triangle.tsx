@@ -1,3 +1,5 @@
+import { orbsBuild } from "@stats"
+
 import type { FC } from "react"
 import { CylinderBufferGeometry } from "three"
 
@@ -7,8 +9,8 @@ export const Triangle: FC<Orb> = (props) => (
 	<Orb
 		geometry={CylinderBufferGeometry}
 		shapeType="Cylinder"
-		args={[1, 1, 1, 3]}
-		color={0xf44336}
+		args={orbsBuild.triangle.args}
+		color={orbsBuild.triangle.color}
 		{...props}
 	/>
 )

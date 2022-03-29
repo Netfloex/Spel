@@ -1,5 +1,10 @@
 import { Triplet } from "@pmndrs/cannon-worker-api"
 
+import { BoxBufferGeometry, CylinderBufferGeometry } from "three"
+
+type CylinderArgs = ConstructorParameters<typeof CylinderBufferGeometry>
+type BoxArgs = ConstructorParameters<typeof BoxBufferGeometry>
+
 export const tankStats = {
 	secondsPerBullet: 1,
 	radius: 1,
@@ -22,7 +27,7 @@ export const tankBuild = {
 			tankStats.gunRadius,
 			tankStats.gunRadius,
 			tankStats.gunLength,
-		] as Triplet,
+		] as CylinderArgs,
 		rotation: [-Math.PI / 2, 0, 0] as Triplet,
 		position: [
 			0,
@@ -50,4 +55,31 @@ export const cameraStats = {
 export const floorStats = {
 	color: 0x343434,
 	size: 100,
+}
+
+export const orbStats = {
+	damping: 0.9,
+	angularDamping: 0.9,
+	y: 0.5,
+}
+
+export const orbsBuild: Record<
+	string,
+	{
+		args: BoxArgs | CylinderArgs
+		color: number
+	}
+> = {
+	square: {
+		args: [1.5, 1.5, 1.5],
+		color: 0xff9800,
+	},
+	triangle: {
+		args: [1, 1, 1, 3],
+		color: 0xf44336,
+	},
+	hexagon: {
+		args: [1, 1, 1, 6, 6],
+		color: 0x536dfe,
+	},
 }

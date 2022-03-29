@@ -24,7 +24,7 @@ export const Tank: FC<{
 			},
 		],
 		position,
-		// isTrigger: true,
+		isTrigger: true,
 		mass: 10,
 		angularDamping: 1,
 		linearFactor: [1, 0, 1],
