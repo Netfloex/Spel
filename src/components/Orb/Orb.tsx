@@ -1,8 +1,7 @@
 import { ShapeType, useCompoundBody } from "@react-three/cannon"
-import { useThree } from "@react-three/fiber"
 import { orbStats } from "@stats"
 
-import { FC, MutableRefObject } from "react"
+import { FC, MutableRefObject, useEffect, useMemo } from "react"
 import { BoxBufferGeometry, CylinderBufferGeometry, Mesh, Vector3 } from "three"
 
 import { useGame } from "@components"
@@ -23,12 +22,10 @@ export const Orb: FC<
 		shapeType: ShapeType
 	}
 > = ({ args, color, geometry, startPos, shapeType, id, orbRef }) => {
-	const [killOrb, fadeBullet] = useGame((state) => [
-		state.killOrb,
+	const [fadeOrb, fadeBullet] = useGame((state) => [
+		state.fadeOrb,
 		state.fadeBullet,
 	])
-
-	const clock = useThree((state) => state.clock)
 
 	useCompoundBody(
 		() => ({
@@ -45,23 +42,29 @@ export const Orb: FC<
 			linearFactor: [1, 0, 1],
 			isTrigger: true,
 			onCollide: ({ body }): void => {
-				killOrb(id)
-				fadeBullet(body.userData.id, clock.getElapsedTime())
+				if (!body?.name.startsWith("Bullet")) return
+				const faded = fadeOrb(id)
+				if (faded) fadeBullet(body.userData.id)
 			},
 			userData: { id },
 		}),
 		orbRef,
 	)
 
+	const cachedGeometry = useMemo(
+		() => new geometry(...(args as unknown[] as never[])),
+		[geometry, args],
+	)
+	useEffect(() => console.log("rerender"))
 	return (
 		<mesh
 			ref={orbRef}
 			castShadow
 			position={startPos}
-			geometry={new geometry(...(args as unknown[] as never[]))}
+			geometry={cachedGeometry}
 			name={`Orb ${id}`}
 		>
-			<meshStandardMaterial color={color} />
+			<meshStandardMaterial color={color} transparent />
 		</mesh>
 	)
 }

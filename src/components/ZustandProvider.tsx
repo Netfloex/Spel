@@ -1,3 +1,4 @@
+import { useThree } from "@react-three/fiber"
 import { bulletStats, floorStats, orbStats } from "@stats"
 
 import { createRef, FC } from "react"
@@ -21,17 +22,20 @@ type State = {
 		time: number
 	}) => void
 
-	freshenBullets: (time: number) => void
+	freshenBullets: () => void
 
 	orbs: LiveOrb[]
-	killOrb: (id: number) => void
-	fadeBullet: (id: number, time: number) => void
+	freshenOrbs: () => void
+	fadeOrb: (id: number) => boolean
+	// killBullet: (id: number) => void
+	fadeBullet: (id: number) => void
 }
 
 const { Provider, useStore } = createContext<State>()
 export const useGame = useStore
 
 export const ZustandProvider: FC = ({ children }) => {
+	const clock = useThree((state) => state.clock)
 	return (
 		<Provider
 			// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -54,12 +58,14 @@ export const ZustandProvider: FC = ({ children }) => {
 								},
 							],
 						})),
-					// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-					freshenBullets: (time) => {
+					freshenBullets: (): void => {
+						const time = clock.getElapsedTime()
 						const { bullets }: { bullets: LiveBullet[] } = get()
+
 						const freshBullets = bullets.filter(
 							(bullet: LiveBullet) => {
 								const timeAlive = time - bullet.built
+
 								if (
 									bullet.bulletRef.current &&
 									bulletStats.secondsToLive - timeAlive <
@@ -78,13 +84,14 @@ export const ZustandProvider: FC = ({ children }) => {
 								return timeAlive < bulletStats.secondsToLive
 							},
 						)
+
 						if (freshBullets.length != bullets.length)
-							return set(() => ({
+							set(() => ({
 								bullets: freshBullets,
 							}))
 					},
 
-					orbs: Array.from({ length: 50 }, (_, id) => ({
+					orbs: Array.from({ length: orbStats.count }, (_, id) => ({
 						startPos: new Vector3(
 							random(-floorStats.size / 2, floorStats.size / 2),
 							orbStats.y,
@@ -95,13 +102,62 @@ export const ZustandProvider: FC = ({ children }) => {
 						),
 						id,
 						orbRef: createRef(),
+						fadingSince: false,
 					})),
-					killOrb: (id: number) =>
+					freshenOrbs: (): void => {
+						const time = clock.getElapsedTime()
+						const { orbs } = get()
+
+						const newOrbs = orbs.filter((orb) => {
+							if (
+								orb.fadingSince &&
+								orb.orbRef.current &&
+								!Array.isArray(orb.orbRef.current.material)
+							) {
+								orb.orbRef.current.material.opacity =
+									1 -
+									(time - orb.fadingSince) /
+										orbStats.fadeSeconds
+
+								orb.orbRef.current.castShadow = false
+
+								return orb.orbRef.current.material.opacity > 0
+							} else return true
+						})
+						if (orbs.length != newOrbs.length)
+							set({ orbs: newOrbs })
+					},
+					fadeOrb: (id): boolean => {
+						const time = clock.getElapsedTime()
+						const { orbs } = get()
+						const notFadingOrb = orbs.find(
+							(orb) => orb.id == id && !orb.fadingSince,
+						)
+
+						if (!notFadingOrb) return false
+
 						set(({ orbs }) => ({
-							orbs: orbs.filter((orb) => orb.id != id),
-						})),
-					fadeBullet: (id: number, time: number) =>
-						set(({ bullets }) => ({
+							orbs: orbs.map((orb) => {
+								if (orb != notFadingOrb) return orb
+
+								return {
+									...orb,
+									fadingSince: time,
+								}
+							}),
+						}))
+
+						return true
+					},
+					// killBullet: (id) =>
+					// 	set(({ bullets }) => ({
+					// 		bullets: bullets.filter(
+					// 			(bullet) => bullet.id != id,
+					// 		),
+					// 	})),
+					fadeBullet: (id): void => {
+						const time = clock.getElapsedTime()
+						return set(({ bullets }) => ({
 							bullets: bullets.map((bullet) => {
 								if (bullet.id != id) return bullet
 
@@ -118,7 +174,8 @@ export const ZustandProvider: FC = ({ children }) => {
 
 								return bullet
 							}),
-						})),
+						}))
+					},
 				}))
 			}
 		>

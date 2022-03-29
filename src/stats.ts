@@ -44,23 +44,25 @@ export const bulletStats = {
 	speed: 50,
 	damping: 0.9,
 	secondsToLive: 10,
-	fadeSeconds: 1,
+	fadeSeconds: 0.1,
 	color: 0x757575,
 }
 
 export const cameraStats = {
-	y: 20,
+	y: 30,
 }
 
 export const floorStats = {
 	color: 0x343434,
-	size: 100,
+	size: 250,
 }
 
 export const orbStats = {
 	damping: 0.9,
 	angularDamping: 0.9,
 	y: 0.5,
+	fadeSeconds: 0.3,
+	count: 250,
 }
 
 export const orbsBuild: Record<

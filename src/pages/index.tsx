@@ -7,7 +7,11 @@ import { NextPage } from "next"
 import { Scene, ZustandProvider } from "@components"
 
 const Home: NextPage = () => (
-	<Canvas shadows camera={{ position: [0, cameraStats.y, 0] }}>
+	<Canvas
+		mode="concurrent"
+		shadows
+		camera={{ position: [0, cameraStats.y, 0] }}
+	>
 		<Physics gravity={[0, 0, 0]}>
 			<ZustandProvider>
 				<Scene />

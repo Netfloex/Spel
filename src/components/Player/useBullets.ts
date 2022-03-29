@@ -19,21 +19,17 @@ export const useBullets = (playerPos: MutableRefObject<Triplet>): void => {
 
 	const lastBullet = useRef(0)
 
-	const [freshenBullets, addBullet] = useGame((state) => [
-		state.freshenBullets,
-		state.addBullet,
-	])
+	const addBullet = useGame((state) => state.addBullet)
 
-	useFrame((state) => {
+	useFrame(({ clock }) => {
 		if (!playerPos.current) return
 		playerVector.fromArray(playerPos.current)
 
-		const time = state.clock.getElapsedTime()
+		const time = clock.getElapsedTime()
 
 		if (
 			mouse.current[0] &&
-			state.clock.getElapsedTime() - lastBullet.current >
-				tankStats.secondsPerBullet
+			time - lastBullet.current > tankStats.secondsPerBullet
 		) {
 			lastBullet.current = time
 			const newBulletForce = mouse.current.pos
@@ -57,7 +53,5 @@ export const useBullets = (playerPos: MutableRefObject<Triplet>): void => {
 				time: lastBullet.current,
 			})
 		}
-
-		freshenBullets(time)
 	})
 }
