@@ -65,23 +65,17 @@ export const orbStats = {
 	count: 250,
 }
 
-export const orbsBuild: Record<
-	string,
-	{
-		args: BoxArgs | CylinderArgs
-		color: number
-	}
-> = {
+export const orbsBuild = {
 	square: {
-		args: [1.5, 1.5, 1.5],
+		args: [1.5, 1.5, 1.5] as BoxArgs,
 		color: 0xff9800,
 	},
 	triangle: {
-		args: [1, 1, 1, 3],
+		args: [1, 1, 1, 3] as CylinderArgs,
 		color: 0xf44336,
 	},
 	hexagon: {
-		args: [1, 1, 1, 6, 6],
+		args: [1, 1, 1, 6, 6] as CylinderArgs,
 		color: 0x536dfe,
 	},
 }

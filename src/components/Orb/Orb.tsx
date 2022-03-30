@@ -1,8 +1,14 @@
 import { ShapeType, useCompoundBody } from "@react-three/cannon"
 import { orbStats } from "@stats"
 
-import { FC, MutableRefObject, useEffect, useMemo } from "react"
-import { BoxBufferGeometry, CylinderBufferGeometry, Mesh, Vector3 } from "three"
+import { FC, MutableRefObject } from "react"
+import {
+	BoxBufferGeometry,
+	BufferGeometry,
+	CylinderBufferGeometry,
+	Mesh,
+	Vector3,
+} from "three"
 
 import { useGame } from "@components"
 
@@ -10,15 +16,15 @@ export interface Orb {
 	startPos: Vector3
 	orbRef: MutableRefObject<Mesh | null>
 	id: number
+	geometry: BufferGeometry
 }
-
-type Geometries = typeof CylinderBufferGeometry | typeof BoxBufferGeometry
 
 export const Orb: FC<
 	Orb & {
-		args: ConstructorParameters<Geometries>
+		args: ConstructorParameters<
+			typeof CylinderBufferGeometry | typeof BoxBufferGeometry
+		>
 		color: number
-		geometry: Geometries
 		shapeType: ShapeType
 	}
 > = ({ args, color, geometry, startPos, shapeType, id, orbRef }) => {
@@ -51,17 +57,12 @@ export const Orb: FC<
 		orbRef,
 	)
 
-	const cachedGeometry = useMemo(
-		() => new geometry(...(args as unknown[] as never[])),
-		[geometry, args],
-	)
-	useEffect(() => console.log("rerender"))
 	return (
 		<mesh
 			ref={orbRef}
 			castShadow
 			position={startPos}
-			geometry={cachedGeometry}
+			geometry={geometry}
 			name={`Orb ${id}`}
 		>
 			<meshStandardMaterial color={color} transparent />
