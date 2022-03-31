@@ -1,10 +1,10 @@
-import { Triplet, useSphere } from "@react-three/cannon"
+import { useSphere } from "@react-three/cannon"
 import { bulletStats } from "@stats"
 
-import { FC, MutableRefObject, useEffect, useRef } from "react"
+import { FC, MutableRefObject } from "react"
 import { Mesh, Vector3 } from "three"
 
-import { useGame } from "@hooks"
+import { useGame, useGameStats } from "@hooks"
 
 export interface Bullet {
 	startPos: Vector3
@@ -18,6 +18,7 @@ export const Bullet: FC<Bullet> = ({ startPos, force, bulletRef, id }) => {
 		state.fadeOrb,
 		state.fadeBullet,
 	])
+	const incScore = useGameStats((state) => state.incScore)
 
 	const [, api] = useSphere(
 		() => ({
@@ -35,6 +36,7 @@ export const Bullet: FC<Bullet> = ({ startPos, force, bulletRef, id }) => {
 				const faded = fadeOrb(body.userData.id)
 				if (faded) fadeBullet(id)
 				if (faded) api.velocity.set(0, 0, 0)
+				if (faded) incScore(body.userData.points)
 			},
 		}),
 		bulletRef,

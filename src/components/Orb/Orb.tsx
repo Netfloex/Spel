@@ -15,6 +15,7 @@ export interface Orb {
 	orbRef: MutableRefObject<Mesh | null>
 	id: number
 	geometry: BufferGeometry
+	points: number
 }
 
 export const Orb: FC<
@@ -25,7 +26,7 @@ export const Orb: FC<
 		color: number
 		shapeType: ShapeType
 	}
-> = ({ args, color, geometry, startPos, shapeType, id, orbRef }) => {
+> = ({ args, color, geometry, startPos, shapeType, id, orbRef, points }) => {
 	useCompoundBody(
 		() => ({
 			shapes: [
@@ -40,7 +41,7 @@ export const Orb: FC<
 			angularDamping: orbStats.angularDamping,
 			linearFactor: [1, 0, 1],
 			isTrigger: true,
-			userData: { id },
+			userData: { id, points },
 		}),
 		orbRef,
 	)

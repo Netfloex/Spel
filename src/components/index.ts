@@ -1,6 +1,7 @@
 export { Bullet } from "./Bullet"
 export { Bullets } from "./Bullets"
 export { Floor } from "./Floor"
+export { Gui } from "./Gui"
 export { Player } from "./Player"
 export { Orbs, OrbType } from "./Orbs"
 export type { LiveOrb } from "./Orbs"

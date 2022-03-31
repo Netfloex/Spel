@@ -2,8 +2,7 @@ import { PublicApi, Triplet, useCompoundBody } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
 import { tankBuild, tankStats } from "@stats"
 
-import type { FC } from "react"
-import { MutableRefObject } from "react"
+import { FC, MutableRefObject, useEffect } from "react"
 import { Vector3 } from "three"
 
 // eslint-disable-next-line react/display-name
@@ -11,7 +10,8 @@ export const Tank: FC<{
 	api?: MutableRefObject<PublicApi | undefined>
 	lookAt?: MutableRefObject<{ pos: Vector3 } | undefined>
 	position?: Triplet
-}> = ({ api, lookAt, position = [0, 1, 0] }) => {
+	refPosition?: MutableRefObject<Triplet>
+}> = ({ api, lookAt, position = [0, 1, 0], refPosition }) => {
 	const [ref, publicApi] = useCompoundBody(() => ({
 		shapes: [
 			{
@@ -32,17 +32,25 @@ export const Tank: FC<{
 		linearDamping: tankStats.damping,
 	}))
 
-	useFrame(() => {
-		if (lookAt && api && ref.current && lookAt.current) {
-			ref.current.lookAt(lookAt.current.pos)
+	useEffect(
+		() =>
+			refPosition &&
+			publicApi.position.subscribe((val) => (refPosition.current = val)),
+		[publicApi, refPosition],
+	)
 
-			api.current?.rotation.set(
+	useEffect(() => {
+		if (api) api.current = publicApi
+	}, [publicApi, api])
+
+	useFrame(() => {
+		if (lookAt?.current && ref.current) {
+			ref.current.lookAt(lookAt.current.pos)
+			publicApi.rotation.set(
 				...(ref.current.rotation.toArray() as Triplet),
 			)
 		}
 	})
-
-	if (api) api.current = publicApi
 
 	return (
 		<mesh ref={ref} castShadow>

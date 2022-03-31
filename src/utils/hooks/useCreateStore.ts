@@ -12,7 +12,7 @@ import { useConstant } from "@hooks"
 
 import { random } from "@utils"
 
-export type State = {
+export interface State {
 	bullets: LiveBullet[]
 	bulletId: number
 
@@ -118,6 +118,7 @@ export const useCreateStore = (): (() => UseBoundStore<
 							id,
 							orbRef: createRef(),
 							fadingSince: false,
+							points: (type + 1) * 5,
 							geometry:
 								type == OrbType.square
 									? square
