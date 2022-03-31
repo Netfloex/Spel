@@ -2,8 +2,9 @@ import { useFrame } from "@react-three/fiber"
 
 import { FC, useMemo } from "react"
 
-import { useGame } from "@components"
 import { Hexagon, Orb, Square, Triangle } from "@components/orb"
+
+import { useGame } from "@hooks"
 
 export enum OrbType {
 	square,

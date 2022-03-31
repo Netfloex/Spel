@@ -5,9 +5,9 @@ import { bulletStats, tankStats } from "@stats"
 import { MutableRefObject, useMemo, useRef } from "react"
 import { Vector3 } from "three"
 
-import { Bullet, useGame } from "@components"
+import { Bullet } from "@components"
 
-import { useMouse } from "@hooks"
+import { useMouse, useGame } from "@hooks"
 
 export type LiveBullet = Bullet & {
 	built: number

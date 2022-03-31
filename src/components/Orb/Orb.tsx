@@ -10,7 +10,7 @@ import {
 	Vector3,
 } from "three"
 
-import { useGame } from "@components"
+import { useGame } from "@hooks"
 
 export interface Orb {
 	startPos: Vector3

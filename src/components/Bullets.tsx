@@ -2,7 +2,9 @@ import { useFrame } from "@react-three/fiber"
 
 import type { FC } from "react"
 
-import { Bullet, useGame } from "@components"
+import { Bullet } from "@components"
+
+import { useGame } from "@hooks"
 
 export const Bullets: FC = () => {
 	const [bullets, freshenBullets] = useGame((state) => [
