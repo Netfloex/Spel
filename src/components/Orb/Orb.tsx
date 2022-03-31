@@ -10,8 +10,6 @@ import {
 	Vector3,
 } from "three"
 
-import { useGame } from "@hooks"
-
 export interface Orb {
 	startPos: Vector3
 	orbRef: MutableRefObject<Mesh | null>
@@ -28,11 +26,6 @@ export const Orb: FC<
 		shapeType: ShapeType
 	}
 > = ({ args, color, geometry, startPos, shapeType, id, orbRef }) => {
-	const [fadeOrb, fadeBullet] = useGame((state) => [
-		state.fadeOrb,
-		state.fadeBullet,
-	])
-
 	useCompoundBody(
 		() => ({
 			shapes: [
@@ -47,11 +40,6 @@ export const Orb: FC<
 			angularDamping: orbStats.angularDamping,
 			linearFactor: [1, 0, 1],
 			isTrigger: true,
-			onCollide: ({ body }): void => {
-				if (!body?.name.startsWith("Bullet")) return
-				const faded = fadeOrb(id)
-				if (faded) fadeBullet(body.userData.id)
-			},
 			userData: { id },
 		}),
 		orbRef,
