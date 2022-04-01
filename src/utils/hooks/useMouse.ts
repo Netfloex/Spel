@@ -6,7 +6,8 @@ import { Vector3 } from "three"
 import { useEventListener } from "@hooks"
 
 type Mouse = { pos: Vector3 } & Record<number, true>
-export const useMouse = (): MutableRefObject<Mouse> => {
+export type MouseRef = MutableRefObject<Mouse>
+export const useMouse = (): MouseRef => {
 	const mouse = useRef<Mouse>({ pos: new Vector3() })
 
 	useFrame((state) => {

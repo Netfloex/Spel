@@ -7,15 +7,17 @@ import { Vector3 } from "three"
 
 import { Bullet } from "@components"
 
-import { useMouse, useGame } from "@hooks"
+import { MouseRef, useGame } from "@hooks"
 
 export type LiveBullet = Bullet & {
 	built: number
 }
 
-export const useBullets = (playerPos: MutableRefObject<Triplet>): void => {
+export const useBullets = (
+	playerPos: MutableRefObject<Triplet>,
+	mouse: MouseRef,
+): void => {
 	const playerVector = useMemo(() => new Vector3(), [])
-	const mouse = useMouse()
 
 	const lastBullet = useRef(0)
 
