@@ -68,20 +68,21 @@ export const useCreateStore = (): (() => UseBoundStore<
 					bulletId: 0,
 
 					addBullet: ({ startPos, force, time }) =>
-						set(({ bullets, bulletId }) => ({
-							bulletId: bulletId + 1,
-							bullets: [
-								...bullets,
-								{
-									force,
-									startPos,
-									built: time,
-									id: bulletId,
-									bulletRef: createRef(),
-									geometry: bulletGeometry,
-								},
-							],
-						})),
+						set(({ bullets, bulletId }) => {
+							bullets.push({
+								force,
+								startPos,
+								built: time,
+								id: bulletId,
+								bulletRef: createRef(),
+								geometry: bulletGeometry,
+							})
+
+							return {
+								bulletId: bulletId + 1,
+								bullets,
+							}
+						}),
 					freshenBullets: () => {
 						const time = clock.getElapsedTime()
 						const { bullets }: { bullets: LiveBullet[] } = get()

@@ -1,7 +1,7 @@
 import { useSphere } from "@react-three/cannon"
 import { bulletBuild, bulletStats } from "@stats"
 
-import { FC, MutableRefObject } from "react"
+import { FC, memo, MutableRefObject } from "react"
 import { Mesh, SphereBufferGeometry, Vector3 } from "three"
 
 import { useGame, useGameStats } from "@hooks"
@@ -14,7 +14,7 @@ export interface Bullet {
 	geometry: SphereBufferGeometry
 }
 
-export const Bullet: FC<Bullet> = ({
+const UnMemoizedBullet: FC<Bullet> = ({
 	startPos,
 	force,
 	bulletRef,
@@ -63,3 +63,5 @@ export const Bullet: FC<Bullet> = ({
 		</>
 	)
 }
+
+export const Bullet = memo(UnMemoizedBullet)

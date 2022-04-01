@@ -1,6 +1,6 @@
 import { useFrame } from "@react-three/fiber"
 
-import type { FC } from "react"
+import { FC, useMemo } from "react"
 
 import { Bullet } from "@components"
 
@@ -16,11 +16,13 @@ export const Bullets: FC = () => {
 		freshenBullets()
 	})
 
-	return (
-		<>
-			{bullets.map((bullet) => (
-				<Bullet key={bullet.id} {...bullet} />
-			))}
-		</>
+	const bulletElements = useMemo(
+		() => bullets.map((bullet) => <Bullet key={bullet.id} {...bullet} />),
+		// Also add bullets.length because that's when we need to update
+		// To remove or add existing bullets
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[bullets, bullets.length],
 	)
+
+	return <>{bulletElements}</>
 }

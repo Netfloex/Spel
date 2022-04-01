@@ -1,10 +1,10 @@
 import { orbsBuild } from "@stats"
 
-import type { FC } from "react"
+import { FC, memo } from "react"
 
 import { Orb } from "@components/orb"
 
-export const Square: FC<Orb> = (props) => (
+const UnMemoizedSquare: FC<Orb> = (props) => (
 	<Orb
 		shapeType="Box"
 		args={orbsBuild.square.args}
@@ -12,3 +12,5 @@ export const Square: FC<Orb> = (props) => (
 		{...props}
 	/>
 )
+
+export const Square = memo(UnMemoizedSquare)

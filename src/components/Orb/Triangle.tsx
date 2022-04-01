@@ -1,10 +1,10 @@
 import { orbsBuild } from "@stats"
 
-import type { FC } from "react"
+import { FC, memo } from "react"
 
 import { Orb } from "@components/orb"
 
-export const Triangle: FC<Orb> = (props) => (
+export const UnMemoizedTriangle: FC<Orb> = (props) => (
 	<Orb
 		shapeType="Cylinder"
 		args={orbsBuild.triangle.args}
@@ -12,3 +12,5 @@ export const Triangle: FC<Orb> = (props) => (
 		{...props}
 	/>
 )
+
+export const Triangle = memo(UnMemoizedTriangle)
