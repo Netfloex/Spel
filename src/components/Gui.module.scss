@@ -11,16 +11,33 @@
 	pointer-events: none;
 
 	.gui {
-		width: 50%;
+		width: clamp(10rem, 50%, 40rem);
+		--progress-height: 1rem;
 
-		.text {
-			text-align: center;
-			font-size: small;
+		$progress-height: var(--progress-height);
+
+		.small {
+			--progress-height: 1rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			margin-bottom: 0.5rem;
+			.progress {
+				width: 75%;
+
+				.textWrapper {
+					font-size: smaller;
+				}
+
+				.bar {
+					background-color: colors.$score;
+				}
+			}
 		}
 
 		.progress {
-			$height: 1.5rem;
-			height: $height;
+			height: $progress-height;
 			background-color: colors.$tertiary-background;
 			padding: 0.3rem;
 			border-radius: 1rem;
@@ -38,10 +55,10 @@
 			}
 
 			.bar {
-				background-color: colors.$score;
+				background-color: colors.$level;
 				border-radius: 1rem;
-				height: $height;
-				min-width: $height;
+				height: $progress-height;
+				min-width: $progress-height;
 				transition: width 1s;
 			}
 		}
