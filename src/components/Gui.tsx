@@ -7,8 +7,6 @@ import { useGameStats } from "@hooks"
 export const Gui: FC = () => {
 	const [level, score] = useGameStats((state) => [state.level, state.score])
 
-	console.log(useGameStats())
-
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.gui}>

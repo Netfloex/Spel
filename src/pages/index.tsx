@@ -3,7 +3,6 @@ import { Canvas } from "@react-three/fiber"
 import { cameraStats } from "@stats"
 
 import { NextPage } from "next"
-import { Perf } from "r3f-perf"
 
 import { Gui, Scene, ZustandProvider } from "@components"
 
@@ -19,7 +18,6 @@ const Home: NextPage = () => (
 					<Scene />
 				</ZustandProvider>
 			</Physics>
-			<Perf />
 		</Canvas>
 		<Gui />
 	</>

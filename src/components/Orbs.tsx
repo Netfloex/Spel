@@ -1,5 +1,6 @@
 import { useFrame } from "@react-three/fiber"
 
+import { setCustomData } from "r3f-perf"
 import { FC, useMemo } from "react"
 
 import { Hexagon, Orb, Square, Triangle } from "@components/orb"
@@ -25,6 +26,7 @@ export const Orbs: FC = () => {
 
 	useFrame(() => {
 		freshenOrbs()
+		setCustomData(orbs.length)
 	})
 
 	const orbElements = useMemo(
