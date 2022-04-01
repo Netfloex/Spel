@@ -1,8 +1,8 @@
 import { useSphere } from "@react-three/cannon"
-import { bulletStats } from "@stats"
+import { bulletBuild, bulletStats } from "@stats"
 
 import { FC, MutableRefObject } from "react"
-import { Mesh, Vector3 } from "three"
+import { Mesh, SphereBufferGeometry, Vector3 } from "three"
 
 import { useGame, useGameStats } from "@hooks"
 
@@ -11,9 +11,16 @@ export interface Bullet {
 	bulletRef: MutableRefObject<Mesh | null>
 	force: Vector3
 	id: number
+	geometry: SphereBufferGeometry
 }
 
-export const Bullet: FC<Bullet> = ({ startPos, force, bulletRef, id }) => {
+export const Bullet: FC<Bullet> = ({
+	startPos,
+	force,
+	bulletRef,
+	id,
+	geometry,
+}) => {
 	const [fadeOrb, fadeBullet] = useGame((state) => [
 		state.fadeOrb,
 		state.fadeBullet,
@@ -44,9 +51,14 @@ export const Bullet: FC<Bullet> = ({ startPos, force, bulletRef, id }) => {
 
 	return (
 		<>
-			<mesh castShadow ref={bulletRef} name={`Bullet ${id}`}>
-				<sphereBufferGeometry args={[bulletStats.radius]} />
-				<meshStandardMaterial color={bulletStats.color} transparent />
+			<mesh
+				castShadow
+				ref={bulletRef}
+				name={`Bullet ${id}`}
+				geometry={geometry}
+			>
+				{/* <sphereBufferGeometry args={[bulletStats.radius]} /> */}
+				<meshStandardMaterial color={bulletBuild.color} transparent />
 			</mesh>
 		</>
 	)

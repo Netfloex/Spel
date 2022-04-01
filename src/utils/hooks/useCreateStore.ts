@@ -1,8 +1,19 @@
 import { useThree } from "@react-three/fiber"
-import { bulletStats, floorStats, orbsBuild, orbStats } from "@stats"
+import {
+	bulletBuild,
+	bulletStats,
+	floorStats,
+	orbsBuild,
+	orbStats,
+} from "@stats"
 
 import { createRef } from "react"
-import { BoxBufferGeometry, CylinderBufferGeometry, Vector3 } from "three"
+import {
+	BoxBufferGeometry,
+	CylinderBufferGeometry,
+	SphereBufferGeometry,
+	Vector3,
+} from "three"
 import create, { StoreApi, UseBoundStore } from "zustand"
 
 import { LiveOrb, OrbType } from "@components"
@@ -39,12 +50,17 @@ export const useCreateStore = (): (() => UseBoundStore<
 	return useConstant(
 		() => () =>
 			create<State>((set, get) => {
-				const square = new BoxBufferGeometry(...orbsBuild.square.args)
-				const triangle = new CylinderBufferGeometry(
+				const squareGeometry = new BoxBufferGeometry(
+					...orbsBuild.square.args,
+				)
+				const triangleGeometry = new CylinderBufferGeometry(
 					...orbsBuild.triangle.args,
 				)
-				const hexagon = new CylinderBufferGeometry(
+				const hexagonGeometry = new CylinderBufferGeometry(
 					...orbsBuild.hexagon.args,
+				)
+				const bulletGeometry = new SphereBufferGeometry(
+					...bulletBuild.args,
 				)
 
 				const state: State = {
@@ -62,6 +78,7 @@ export const useCreateStore = (): (() => UseBoundStore<
 									built: time,
 									id: bulletId,
 									bulletRef: createRef(),
+									geometry: bulletGeometry,
 								},
 							],
 						})),
@@ -121,10 +138,10 @@ export const useCreateStore = (): (() => UseBoundStore<
 							points: (type + 1) * 5,
 							geometry:
 								type == OrbType.square
-									? square
+									? squareGeometry
 									: type == OrbType.triangle
-									? triangle
-									: hexagon,
+									? triangleGeometry
+									: hexagonGeometry,
 						}
 					}),
 					freshenOrbs: () => {

@@ -1,9 +1,14 @@
 import { Triplet } from "@pmndrs/cannon-worker-api"
 
-import { BoxBufferGeometry, CylinderBufferGeometry } from "three"
+import {
+	BoxBufferGeometry,
+	CylinderBufferGeometry,
+	SphereBufferGeometry,
+} from "three"
 
 type CylinderArgs = ConstructorParameters<typeof CylinderBufferGeometry>
 type BoxArgs = ConstructorParameters<typeof BoxBufferGeometry>
+type SphereArgs = ConstructorParameters<typeof SphereBufferGeometry>
 
 export const tankStats = {
 	secondsPerBullet: 1,
@@ -19,7 +24,7 @@ export const tankStats = {
 export const tankBuild = {
 	body: {
 		color: 0x03a9f4,
-		args: [tankStats.radius] as [radius: number],
+		args: [tankStats.radius] as SphereArgs,
 	},
 	gun: {
 		color: 0x9e9e9e,
@@ -45,6 +50,10 @@ export const bulletStats = {
 	damping: 0.9,
 	secondsToLive: 10,
 	fadeSeconds: 0.1,
+}
+
+export const bulletBuild = {
+	args: [bulletStats.radius] as SphereArgs,
 	color: 0x757575,
 }
 
