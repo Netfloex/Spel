@@ -50,6 +50,7 @@ export const Orb: FC<
 		<mesh
 			ref={orbRef}
 			castShadow
+			receiveShadow
 			position={startPos}
 			geometry={geometry}
 			name={`Orb ${id}`}

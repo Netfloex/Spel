@@ -53,6 +53,7 @@ const UnMemoizedBullet: FC<Bullet> = ({
 		<>
 			<mesh
 				castShadow
+				receiveShadow
 				ref={bulletRef}
 				name={`Bullet ${id}`}
 				geometry={geometry}
