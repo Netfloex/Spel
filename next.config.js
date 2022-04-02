@@ -19,7 +19,8 @@ const config = {
 	},
 }
 
-// const withTM = require("next-transpile-modules")(["three"])
+const withAnalyzer = process.env.ANALYZE
+	? require("@next/bundle-analyzer")()
+	: (/** @type {import('next').NextConfig} */ config) => config
 
-// module.exports = withTM(config)
-module.exports = config
+module.exports = withAnalyzer(config)
