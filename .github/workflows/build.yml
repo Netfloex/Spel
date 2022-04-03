@@ -34,15 +34,15 @@ jobs:
             - name: Login to DockerHub
               uses: docker/login-action@v1.10.0
               with:
-                  username: ${{ inputs.USERNAME }}
-                  password: ${{ inputs.TOKEN }}
+                  username: netfloex
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
 
             # Build & Push
             - name: Build Dockerfile and push
               uses: docker/build-push-action@v2.7.0
               with:
                   push: true
-                  tags: ${{ inputs.tags }}
+                  tags: netfloex/spel:latest
                   platforms: |
                       linux/amd64
                       linux/arm64
