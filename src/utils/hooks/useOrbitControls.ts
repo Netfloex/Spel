@@ -7,8 +7,8 @@ export const useOrbitControls = (): void => {
 	const { camera, gl } = useThree()
 	useEffect(() => {
 		const controls = new OrbitControls(camera, gl.domElement)
-		controls.minDistance = 3
-		controls.maxDistance = 20
+		controls.minDistance = 1
+		controls.maxDistance = 2000
 		return (): void => {
 			controls.dispose()
 		}

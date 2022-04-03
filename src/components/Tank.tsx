@@ -53,20 +53,22 @@ export const Tank: FC<{
 	})
 
 	return (
-		<mesh ref={ref} castShadow receiveShadow>
+		<mesh ref={ref}>
 			<group>
-				<mesh>
+				<mesh castShadow receiveShadow>
 					<sphereBufferGeometry args={tankBuild.body.args} />
 					<meshStandardMaterial color={tankBuild.body.color} />
 				</mesh>
 				<mesh
+					castShadow
+					receiveShadow
 					position={tankBuild.gun.position}
 					rotation={tankBuild.gun.rotation}
 				>
 					<cylinderBufferGeometry args={tankBuild.gun.args} />
 					<meshStandardMaterial color={tankBuild.gun.color} />
 				</mesh>
-				<pointLight position={[0, 10, 0]} castShadow />
+				<pointLight position={[0, 10, 0]} castShadow intensity={0.4} />
 			</group>
 		</mesh>
 	)

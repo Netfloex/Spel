@@ -13,9 +13,9 @@ export const useMouse = (): MouseRef => {
 	useFrame((state) => {
 		mouse.current.pos
 			.set(
-				state.pointer.x * state.viewport.width,
+				(state.pointer.x * state.viewport.width) / 2,
 				1,
-				-state.pointer.y * state.viewport.height,
+				(-state.pointer.y * state.viewport.height) / 2,
 			)
 			.add(state.camera.position)
 			.setY(1)

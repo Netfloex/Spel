@@ -29,6 +29,7 @@
 		"@next/bundle-analyzer": "^12.1.4",
 		"@pmndrs/cannon-worker-api": "^2.0.0",
 		"@react-three/fiber": "^8.0.7",
+		"@react-three/postprocessing": "^2.3.1",
 		"@trivago/prettier-plugin-sort-imports": "^3.2.0",
 		"@types/node": "^17.0.23",
 		"@types/react": "^17.0.43",
