@@ -142,7 +142,33 @@ export const useCreateStore = (): (() => UseBoundStore<
 									? squareGeometry
 									: type == OrbType.triangle
 									? triangleGeometry
-									: hexagonGeometry,
+									: type == OrbType.hexagon
+									? hexagonGeometry
+									: new SphereBufferGeometry(),
+							args:
+								type == OrbType.square
+									? orbsBuild.square.args
+									: type == OrbType.triangle
+									? orbsBuild.triangle.args
+									: type == OrbType.hexagon
+									? orbsBuild.hexagon.args
+									: [1],
+							shapeType:
+								type == OrbType.square
+									? "Box"
+									: type == OrbType.triangle
+									? "Cylinder"
+									: type == OrbType.hexagon
+									? "Cylinder"
+									: "Sphere",
+							color:
+								type == OrbType.square
+									? orbsBuild.square.color
+									: type == OrbType.triangle
+									? orbsBuild.triangle.color
+									: type == OrbType.hexagon
+									? orbsBuild.hexagon.color
+									: 0xffffff,
 						}
 					}),
 					freshenOrbs: () => {

@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber"
 import { setCustomData } from "r3f-perf"
 import { FC, useMemo } from "react"
 
-import { Hexagon, Orb, Square, Triangle } from "@components/orb"
+import { Orb } from "@components/orb"
 
 import { useGame } from "@hooks"
 
@@ -30,15 +30,7 @@ export const Orbs: FC = () => {
 	})
 
 	const orbElements = useMemo(
-		() =>
-			orbs.map((orb) => {
-				if (orb.type == OrbType.square)
-					return <Square key={orb.id} {...orb} />
-				if (orb.type == OrbType.triangle)
-					return <Triangle key={orb.id} {...orb} />
-				if (orb.type == OrbType.hexagon)
-					return <Hexagon key={orb.id} {...orb} />
-			}),
+		() => orbs.map((orb) => <Orb key={orb.id} {...orb} />),
 		[orbs],
 	)
 

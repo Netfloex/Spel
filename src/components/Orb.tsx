@@ -1,7 +1,7 @@
 import { ShapeType, useCompoundBody } from "@react-three/cannon"
 import { orbStats } from "@stats"
 
-import { FC, MutableRefObject } from "react"
+import { FC, memo, MutableRefObject, useEffect } from "react"
 import {
 	BoxBufferGeometry,
 	BufferGeometry,
@@ -16,17 +16,23 @@ export interface Orb {
 	id: number
 	geometry: BufferGeometry
 	points: number
+	args: ConstructorParameters<
+		typeof CylinderBufferGeometry | typeof BoxBufferGeometry
+	>
+	color: number
+	shapeType: ShapeType
 }
 
-export const Orb: FC<
-	Orb & {
-		args: ConstructorParameters<
-			typeof CylinderBufferGeometry | typeof BoxBufferGeometry
-		>
-		color: number
-		shapeType: ShapeType
-	}
-> = ({ args, color, geometry, startPos, shapeType, id, orbRef, points }) => {
+const UnMemoizedOrb: FC<Orb> = ({
+	args,
+	color,
+	geometry,
+	startPos,
+	shapeType,
+	id,
+	orbRef,
+	points,
+}) => {
 	useCompoundBody(
 		() => ({
 			shapes: [
@@ -45,7 +51,7 @@ export const Orb: FC<
 		}),
 		orbRef,
 	)
-
+	useEffect(() => console.log("Pw"))
 	return (
 		<mesh
 			ref={orbRef}
@@ -59,3 +65,5 @@ export const Orb: FC<
 		</mesh>
 	)
 }
+
+export const Orb = memo(UnMemoizedOrb)
