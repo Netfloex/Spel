@@ -1,7 +1,7 @@
 import { ShapeType, useCompoundBody } from "@react-three/cannon"
 import { orbStats } from "@stats"
 
-import { FC, memo, MutableRefObject, useEffect } from "react"
+import { FC, memo, MutableRefObject } from "react"
 import {
 	BoxBufferGeometry,
 	BufferGeometry,
@@ -51,7 +51,7 @@ const UnMemoizedOrb: FC<Orb> = ({
 		}),
 		orbRef,
 	)
-	useEffect(() => console.log("Pw"))
+
 	return (
 		<mesh
 			ref={orbRef}

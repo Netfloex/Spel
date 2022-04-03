@@ -5,7 +5,6 @@ import { tankBuild, tankStats } from "@stats"
 import { FC, MutableRefObject, useEffect } from "react"
 import { Vector3 } from "three"
 
-// eslint-disable-next-line react/display-name
 export const Tank: FC<{
 	api?: MutableRefObject<PublicApi | undefined>
 	lookAt?: MutableRefObject<{ pos: Vector3 } | undefined>
