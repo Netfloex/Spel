@@ -1,8 +1,7 @@
-import { PublicApi, Triplet } from "@react-three/cannon"
-import { useFrame } from "@react-three/fiber"
-import { cameraStats } from "@stats"
+import { PublicApi } from "@react-three/cannon"
 
 import { FC, useRef } from "react"
+import { Vector3 } from "three"
 
 import { Tank } from "@components"
 import { useBullets, useMovement } from "@components/player"
@@ -13,14 +12,12 @@ export const Player: FC = () => {
 	const api = useRef<PublicApi | undefined>(undefined)
 	const mouse = useMouse()
 
-	const playerPos = useRef<Triplet>([0, 0, 0])
+	const playerPos = useRef<Vector3>(new Vector3(0, 1, 0))
 
-	useMovement(api)
+	useMovement(api, playerPos)
 	useBullets(playerPos, mouse)
 
-	useFrame(({ camera }) => {
-		camera.position.fromArray(playerPos.current).setY(cameraStats.y)
-	})
-
-	return <Tank api={api} refPosition={playerPos} lookAt={mouse} />
+	return (
+		<Tank position={playerPos.current.toArray()} api={api} lookAt={mouse} />
+	)
 }

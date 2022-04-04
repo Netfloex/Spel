@@ -1,8 +1,7 @@
-import { Triplet } from "@pmndrs/cannon-worker-api"
 import { useFrame } from "@react-three/fiber"
 import { bulletStats, tankStats } from "@stats"
 
-import { MutableRefObject, useMemo, useRef } from "react"
+import { MutableRefObject, useRef } from "react"
 import { Vector3 } from "three"
 
 import { Bullet } from "@components"
@@ -14,18 +13,15 @@ export type LiveBullet = Bullet & {
 }
 
 export const useBullets = (
-	playerPos: MutableRefObject<Triplet>,
+	playerPos: MutableRefObject<Vector3>,
 	mouse: MouseRef,
 ): void => {
-	const playerVector = useMemo(() => new Vector3(), [])
-
 	const lastBullet = useRef(0)
 
 	const addBullet = useGame((state) => state.addBullet)
 
 	useFrame(({ clock }) => {
 		if (!playerPos.current) return
-		playerVector.fromArray(playerPos.current)
 
 		const time = clock.getElapsedTime()
 
@@ -36,11 +32,11 @@ export const useBullets = (
 			lastBullet.current = time
 			const newBulletForce = mouse.current.pos
 				.clone()
-				.sub(playerVector)
+				.sub(playerPos.current)
 				.setLength(bulletStats.speed)
 
 			addBullet({
-				startPos: playerVector
+				startPos: playerPos.current
 					.clone()
 					.add(
 						newBulletForce
@@ -51,7 +47,7 @@ export const useBullets = (
 									tankStats.gunInsideLength,
 							),
 					),
-				force: newBulletForce.clone(),
+				force: newBulletForce,
 				time: lastBullet.current,
 			})
 		}

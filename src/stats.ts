@@ -16,9 +16,9 @@ export const tankStats = {
 	gunLength: 0.9,
 	gunInsideLength: 0.2,
 	gunRadius: 0.5,
-	speedPerSecond: 40,
-	maxSpeed: 10,
-	damping: 0.95,
+	speedPerSecond: 1,
+	maxSpeed: 0.15,
+	damping: 4,
 }
 
 export const tankBuild = {

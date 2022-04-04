@@ -1,44 +1,57 @@
 import { PublicApi, Triplet } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
-import { tankStats } from "@stats"
+import { cameraStats, tankStats } from "@stats"
 
-import { MutableRefObject, useCallback, useEffect, useRef } from "react"
-import { clamp } from "three/src/math/MathUtils"
+import {
+	MutableRefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react"
+import { Vector3 } from "three"
 
 import { useKeyboard } from "@hooks"
 
 export const useMovement = (
 	player: MutableRefObject<PublicApi | undefined>,
+	playerPos: MutableRefObject<Vector3 | undefined>,
 ): void => {
 	const keyboard = useKeyboard()
 
-	const velocity = useRef<Triplet>([0, 0, 0])
-	useEffect(
-		() =>
-			player.current?.velocity.subscribe((vel) => {
-				velocity.current = vel
-			}),
-		[player],
-	)
+	const velocity = useRef<Vector3>(new Vector3(0, 0, 0))
+	const addedVelocityTemp = useMemo(() => new Vector3(), [])
+	const zeroVectorTemp = useMemo(() => new Vector3(), [])
+
 	const addVelocity = useCallback(
 		(added: Triplet) => {
-			velocity.current = Array.from({ length: 3 }, (_, i) =>
-				clamp(
-					velocity.current[i] + added[i] * tankStats.speedPerSecond,
-					-tankStats.maxSpeed,
-					tankStats.maxSpeed,
-				),
-			) as Triplet
-
-			player.current?.velocity.set(...velocity.current)
+			velocity.current
+				.add(
+					addedVelocityTemp.fromArray(
+						added.map((v) => v * tankStats.speedPerSecond),
+					),
+				)
+				.clampLength(-tankStats.maxSpeed, tankStats.maxSpeed)
 		},
-		[player],
+		[addedVelocityTemp],
 	)
 
-	useFrame((state, delta) => {
+	useFrame(({ camera }, delta) => {
 		if (keyboard.current["a"]) addVelocity([-delta, 0, 0])
 		if (keyboard.current["d"]) addVelocity([delta, 0, 0])
 		if (keyboard.current["w"]) addVelocity([0, 0, -delta])
 		if (keyboard.current["s"]) addVelocity([0, 0, delta])
+
+		if (!playerPos.current || !player.current) return
+
+		playerPos.current.add(velocity.current)
+		console.log(velocity.current.toArray().map((e) => e.toPrecision(2)))
+
+		velocity.current.lerp(zeroVectorTemp, tankStats.damping * delta)
+		player.current.position.set(...playerPos.current.toArray())
+
+		camera.position.copy(playerPos.current).setY(cameraStats.y)
 	})
+
+	useEffect(() => console.log(velocity))
 }

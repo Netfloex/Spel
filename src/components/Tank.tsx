@@ -1,6 +1,6 @@
 import { PublicApi, Triplet, useCompoundBody } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
-import { tankBuild, tankStats } from "@stats"
+import { tankBuild } from "@stats"
 
 import { FC, MutableRefObject, useEffect } from "react"
 import { Vector3 } from "three"
@@ -9,8 +9,7 @@ export const Tank: FC<{
 	api?: MutableRefObject<PublicApi | undefined>
 	lookAt?: MutableRefObject<{ pos: Vector3 } | undefined>
 	position?: Triplet
-	refPosition?: MutableRefObject<Triplet>
-}> = ({ api, lookAt, position = [0, 1, 0], refPosition }) => {
+}> = ({ api, lookAt, position }) => {
 	const [ref, publicApi] = useCompoundBody(() => ({
 		shapes: [
 			{
@@ -27,16 +26,7 @@ export const Tank: FC<{
 		mass: 10,
 		angularDamping: 1,
 		linearFactor: [1, 0, 1],
-
-		linearDamping: tankStats.damping,
 	}))
-
-	useEffect(
-		() =>
-			refPosition &&
-			publicApi.position.subscribe((val) => (refPosition.current = val)),
-		[publicApi, refPosition],
-	)
 
 	useEffect(() => {
 		if (api) api.current = publicApi
@@ -52,7 +42,7 @@ export const Tank: FC<{
 	})
 
 	return (
-		<mesh ref={ref}>
+		<mesh ref={ref} position={position}>
 			<group>
 				<mesh castShadow receiveShadow>
 					<sphereBufferGeometry args={tankBuild.body.args} />
