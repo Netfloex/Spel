@@ -1,10 +1,9 @@
 import { useFrame } from "@react-three/fiber"
 import { bulletStats, tankStats } from "@stats"
+import type { Bullet } from "@typings/Bullet"
 
 import { MutableRefObject, useRef } from "react"
 import { Vector3 } from "three"
-
-import { Bullet } from "@components"
 
 import { MouseRef, useGame } from "@hooks"
 
@@ -36,15 +35,17 @@ export const useBullets = (
 				.setLength(bulletStats.speed)
 
 			addBullet({
-				startPos: playerPos.current
+				position: playerPos.current
 					.clone()
 					.add(
 						newBulletForce
 							.clone()
 							.setLength(
-								tankStats.gunLength +
+								tankStats.gunLength -
+									tankStats.gunInsideLength +
 									tankStats.radius +
-									tankStats.gunInsideLength,
+									bulletStats.radius -
+									bulletStats.speed,
 							),
 					),
 				force: newBulletForce,

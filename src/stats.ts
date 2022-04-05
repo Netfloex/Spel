@@ -46,8 +46,8 @@ export const tankBuild = {
 
 export const bulletStats = {
 	radius: 0.5,
-	speed: 50,
-	damping: 0.9,
+	speed: 0.3,
+	damping: 2,
 	secondsToLive: 10,
 	fadeSeconds: 0.1,
 }
@@ -69,7 +69,7 @@ export const floorStats = {
 export const orbStats = {
 	damping: 0.9,
 	angularDamping: 0.9,
-	y: 0.5,
+	y: 1,
 	fadeSeconds: 0.3,
 	count: 250,
 }
@@ -80,11 +80,11 @@ export const orbsBuild = {
 		color: 0xff9800,
 	},
 	triangle: {
-		args: [1, 1, 1, 3] as CylinderArgs,
+		args: [1, 1, 2, 3] as CylinderArgs,
 		color: 0xf44336,
 	},
 	hexagon: {
-		args: [1, 1, 1, 6, 6] as CylinderArgs,
+		args: [1, 1, 2, 6, 6] as CylinderArgs,
 		color: 0x536dfe,
 	},
 }

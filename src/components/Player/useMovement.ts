@@ -2,13 +2,7 @@ import { PublicApi, Triplet } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
 import { cameraStats, tankStats } from "@stats"
 
-import {
-	MutableRefObject,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-} from "react"
+import { MutableRefObject, useCallback, useMemo, useRef } from "react"
 import { Vector3 } from "three"
 
 import { useKeyboard } from "@hooks"
@@ -45,13 +39,10 @@ export const useMovement = (
 		if (!playerPos.current || !player.current) return
 
 		playerPos.current.add(velocity.current)
-		console.log(velocity.current.toArray().map((e) => e.toPrecision(2)))
 
 		velocity.current.lerp(zeroVectorTemp, tankStats.damping * delta)
 		player.current.position.set(...playerPos.current.toArray())
 
 		camera.position.copy(playerPos.current).setY(cameraStats.y)
 	})
-
-	useEffect(() => console.log(velocity))
 }

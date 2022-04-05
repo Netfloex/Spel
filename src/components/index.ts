@@ -1,4 +1,3 @@
-export { Bullet } from "./Bullet"
 export { Bullets } from "./Bullets"
 export { Floor } from "./Floor"
 export { Gui } from "./Gui"

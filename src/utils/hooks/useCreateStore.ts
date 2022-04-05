@@ -28,7 +28,7 @@ export interface State {
 	bulletId: number
 
 	addBullet: (bullet: {
-		startPos: Vector3
+		position: Vector3
 		force: Vector3
 		time: number
 	}) => void
@@ -67,11 +67,11 @@ export const useCreateStore = (): (() => UseBoundStore<
 					bullets: [],
 					bulletId: 0,
 
-					addBullet: ({ startPos, force, time }) =>
+					addBullet: ({ position, force, time }) =>
 						set(({ bullets, bulletId }) => {
 							bullets.push({
 								force,
-								startPos,
+								position,
 								built: time,
 								id: bulletId,
 								bulletRef: createRef(),
