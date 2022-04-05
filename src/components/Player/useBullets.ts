@@ -1,18 +1,19 @@
 import { useFrame } from "@react-three/fiber"
 import { bulletStats, tankStats } from "@stats"
-import type { Bullet } from "@typings/Bullet"
 
 import { MutableRefObject, useRef } from "react"
-import { Vector3 } from "three"
+import { Mesh } from "three"
 
 import { MouseRef, useGame } from "@hooks"
+
+import type { Bullet } from "@typings/Bullet"
 
 export type LiveBullet = Bullet & {
 	built: number
 }
 
 export const useBullets = (
-	playerPos: MutableRefObject<Vector3>,
+	playerRef: MutableRefObject<Mesh | null>,
 	mouse: MouseRef,
 ): void => {
 	const lastBullet = useRef(0)
@@ -20,7 +21,7 @@ export const useBullets = (
 	const addBullet = useGame((state) => state.addBullet)
 
 	useFrame(({ clock }) => {
-		if (!playerPos.current) return
+		if (!playerRef.current) return
 
 		const time = clock.getElapsedTime()
 
@@ -31,11 +32,11 @@ export const useBullets = (
 			lastBullet.current = time
 			const newBulletForce = mouse.current.pos
 				.clone()
-				.sub(playerPos.current)
+				.sub(playerRef.current.position)
 				.setLength(bulletStats.speed)
 
 			addBullet({
-				position: playerPos.current
+				position: playerRef.current.position
 					.clone()
 					.add(
 						newBulletForce

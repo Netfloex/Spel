@@ -1,4 +1,3 @@
-import { Physics } from "@react-three/cannon"
 import type { Canvas as CanvasType } from "@react-three/fiber"
 import { cameraStats } from "@stats"
 
@@ -15,11 +14,9 @@ const Canvas = dynamic(
 const Home: NextPage = () => (
 	<>
 		<Canvas shadows camera={{ position: [0, cameraStats.y, 0] }}>
-			<Physics gravity={[0, 0, 0]}>
-				<ZustandProvider>
-					<Scene />
-				</ZustandProvider>
-			</Physics>
+			<ZustandProvider>
+				<Scene />
+			</ZustandProvider>
 		</Canvas>
 		<Gui />
 	</>

@@ -1,10 +1,10 @@
-import { Triplet } from "@pmndrs/cannon-worker-api"
-
 import {
 	BoxBufferGeometry,
 	CylinderBufferGeometry,
 	SphereBufferGeometry,
 } from "three"
+
+import { Triplet } from "@typings/Triplet"
 
 type CylinderArgs = ConstructorParameters<typeof CylinderBufferGeometry>
 type BoxArgs = ConstructorParameters<typeof BoxBufferGeometry>

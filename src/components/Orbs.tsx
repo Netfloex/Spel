@@ -3,9 +3,11 @@ import { useFrame } from "@react-three/fiber"
 import { setCustomData } from "r3f-perf"
 import { FC, useMemo } from "react"
 
-import { Orb } from "@components/orb"
+import { Orb } from "@components"
 
 import { useGame } from "@hooks"
+
+import type { OrbProps } from "@typings/OrbProps"
 
 export enum OrbType {
 	square,
@@ -13,7 +15,7 @@ export enum OrbType {
 	hexagon,
 }
 
-export type LiveOrb = Orb & {
+export type LiveOrb = OrbProps & {
 	type: OrbType
 	fadingSince: number | false
 }

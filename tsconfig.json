@@ -7,7 +7,6 @@
 
 			"@components": ["src/components"],
 			"@components/player": ["src/components/Player"],
-			"@components/orb": ["src/components/Orb"],
 			"@lib": ["src/lib"],
 			"@utils": ["src/utils"],
 			"@hooks": ["src/utils/hooks"],

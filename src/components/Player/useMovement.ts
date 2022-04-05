@@ -1,16 +1,14 @@
-import { PublicApi, Triplet } from "@react-three/cannon"
 import { useFrame } from "@react-three/fiber"
 import { cameraStats, tankStats } from "@stats"
 
 import { MutableRefObject, useCallback, useMemo, useRef } from "react"
-import { Vector3 } from "three"
+import { Mesh, Vector3 } from "three"
 
 import { useKeyboard } from "@hooks"
 
-export const useMovement = (
-	player: MutableRefObject<PublicApi | undefined>,
-	playerPos: MutableRefObject<Vector3 | undefined>,
-): void => {
+import { Triplet } from "@typings/Triplet"
+
+export const useMovement = (playerRef: MutableRefObject<Mesh | null>): void => {
 	const keyboard = useKeyboard()
 
 	const velocity = useRef<Vector3>(new Vector3(0, 0, 0))
@@ -36,13 +34,12 @@ export const useMovement = (
 		if (keyboard.current["w"]) addVelocity([0, 0, -delta])
 		if (keyboard.current["s"]) addVelocity([0, 0, delta])
 
-		if (!playerPos.current || !player.current) return
+		if (!playerRef.current) return
 
-		playerPos.current.add(velocity.current)
+		playerRef.current.position.add(velocity.current)
 
 		velocity.current.lerp(zeroVectorTemp, tankStats.damping * delta)
-		player.current.position.set(...playerPos.current.toArray())
 
-		camera.position.copy(playerPos.current).setY(cameraStats.y)
+		camera.position.copy(playerRef.current.position).setY(cameraStats.y)
 	})
 }
