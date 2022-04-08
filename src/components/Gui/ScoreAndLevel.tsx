@@ -1,10 +1,10 @@
-import styles from "./Gui.module.scss"
+import styles from "./ScoreAndLevel.module.scss"
 
 import type { FC } from "react"
 
 import { useGameStats } from "@hooks"
 
-export const Gui: FC = () => {
+export const ScoreAndLevel: FC = () => {
 	const [level, score] = useGameStats((state) => [state.level, state.score])
 
 	return (
@@ -18,7 +18,7 @@ export const Gui: FC = () => {
 							style={{
 								width: Math.floor(level / 45) * 100 + "%",
 							}}
-						></div>
+						/>
 					</div>
 				</div>
 				<div className={styles.progress}>
@@ -30,7 +30,7 @@ export const Gui: FC = () => {
 						style={{
 							width: (level % 1) * 100 + "%",
 						}}
-					></div>
+					/>
 				</div>
 			</div>
 		</div>

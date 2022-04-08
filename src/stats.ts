@@ -88,3 +88,7 @@ export const orbsBuild = {
 		color: 0x536dfe,
 	},
 }
+
+export const upgradesStats = {
+	maxLevel: 8,
+}

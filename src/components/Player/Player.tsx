@@ -13,5 +13,5 @@ export const Player: FC = () => {
 	useMovement(playerRef)
 	useBullets(playerRef, mouse)
 
-	return <Tank refMesh={playerRef} lookAt={mouse} />
+	return <Tank position={[0, 1, 0]} refMesh={playerRef} lookAt={mouse} />
 }
