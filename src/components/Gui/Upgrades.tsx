@@ -18,7 +18,7 @@ export const Upgrades: FC = () => {
 							<div className={styles.upgradeBarWrapper}>
 								{Array.from(
 									{ length: upgradesStats.maxLevel },
-									({}, i) => (
+									(_, i) => (
 										<div
 											key={i}
 											className={styles.upgradeBar}
