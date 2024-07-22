@@ -5,11 +5,12 @@ import styles from "./Scene.module.scss"
 import { Perf } from "r3f-perf"
 import { FC } from "react"
 
-import { Bullets, Floor, Orbs, Player, Tank } from "@components"
+import { Bullets, Floor, Orbs, Player, Tank, Tanks } from "@components"
 
 export const Scene: FC = () => (
 	<>
 		<Tank position={[5, 1, 5]} />
+		<Tanks />
 		<Player />
 		<Floor />
 		<Bullets />

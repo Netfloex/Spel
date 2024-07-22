@@ -45,8 +45,6 @@ export const Bullets: FC = () => {
 		[gameApi, tempMesh],
 	)
 
-	useEffect(() => console.log("rerender"))
-
 	useFrame(({ raycaster }, delta) => {
 		freshenBullets()
 

@@ -1,8 +1,4 @@
-import { upgradesStats } from "@stats"
-
 import create from "zustand"
-
-import { random } from "@utils"
 
 interface GameStats {
 	score: number
@@ -19,7 +15,7 @@ const scoreToLevel = (score: number): number => {
 	return level < 1 ? 1 : level
 }
 
-const randomLevel = (): number => Math.round(random(0, upgradesStats.maxLevel))
+const randomLevel = (): number => 0
 export const useGameStats = create<GameStats>((set) => {
 	const state: GameStats = {
 		score: 0,

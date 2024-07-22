@@ -15,6 +15,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 
 RUN yarn build
+RUN yarn build:server
 
 
 FROM $NODE_IMAGE AS runner
@@ -26,8 +27,9 @@ COPY --from=builder /app/next.config.js ./
 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-
+COPY src/entrypoint.sh ./
+COPY dist/index.js ./socket.js
 
 EXPOSE 3000
 
-CMD ["node", "server"]
+CMD ["./entrypoint.sh"]
